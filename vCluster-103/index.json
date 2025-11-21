@@ -1,0 +1,20 @@
+{
+  "title": "v103 - vCluster: Multi-Version & Distro",
+  "description": "Spin up virtual clusters with different Kubernetes versions and distros. Show new and old K8s, a different distro, and a sample app use case.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh"
+    },
+    "steps": [
+      { "title": "Verify Environment", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Create vClusters (Different Versions)", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Create vCluster (Different Distro)", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Deploy Sample App", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Compare and Explore", "text": "step5/text.md", "verify": "step5/verify.sh" },
+      { "title": "Cleanup", "text": "step6/text.md", "verify": "step6/verify.sh" }
+    ],
+    "finish": { "text": "finish.md" }
+  },
+  "backend": { "imageid": "kubernetes-kubeadm-1node-4GB" }
+}
