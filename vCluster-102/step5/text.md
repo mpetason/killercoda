@@ -1,30 +1,32 @@
-# Install a Different CRD Version in the vCluster
+# Install a Different Cert-Manager Version in the vCluster
 
-Inside the vCluster, we can install a **completely different CRD version** without impacting the host cluster.
+Inside the vCluster, we can install a **completely different version** of Cert-Manager without impacting the host cluster. This demonstrates how teams can test upgrades or run legacy versions independently.
 
-### Connect and install a different MySQL Operator version:
+### Connect and install Cert-Manager v1.13 in the vCluster:
 
 `vcluster connect my-vcluster --namespace team-x`{{exec}}
 
-`helm repo add bitnami https://charts.bitnami.com/bitnami`{{exec}}
+`helm repo add jetstack https://charts.jetstack.io`{{exec}}
 
-`helm install mysql-operator-vc bitnami/mysql-operator --namespace kube-system --create-namespace --version 0.4.0`{{exec}}
+`helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version 1.13.0`{{exec}}
 
-`kubectl get crd mysql.example.com -o yaml`{{exec}}
+List the CRDs:
+
+`kubectl get crds | grep cert-manager`{{exec}}
 
 Now compare the host vs vCluster:
 
-## Host version:
+## Host version (v1.14.0):
 
 `vcluster disconnect`{{exec}}
 
-`kubectl get crd mysqlclusters.mysql.presslabs.org -o yaml`{{exec}}
+`kubectl get crd certificates.cert-manager.io -o jsonpath='{.spec.names.kind}' && echo`{{exec}}
 
-## vCluster version:
+## vCluster version (v1.13.0):
 
 `vcluster connect my-vcluster --namespace team-x`{{exec}}
 
-`kubectl get crd mysql.example.com -o yaml`{{exec}}
+`kubectl get crd certificates.cert-manager.io -o jsonpath='{.spec.names.kind}' && echo`{{exec}}
 
 The two versions differ — and that's the point.
 vClusters allow **CRD version isolation**, making testing and migration safer.

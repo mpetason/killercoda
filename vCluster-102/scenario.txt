@@ -104,102 +104,130 @@ CRDs become a perfect demonstration of vCluster isolation.
 
 ============================================================
 
-## STEP 4 — Install CRD in the Host Cluster
+## STEP 4 — Install Cert-Manager CRD in the Host Cluster
 
-In this step, we simulate a real-world scenario where the platform team installs a MySQL Operator CRD at the cluster level.
+In this step, we simulate a real-world scenario where the platform team installs Cert-Manager at the cluster level. Cert-Manager is a widely-used certificate management operator that has evolved through multiple CRD versions.
 
-### Install MySQL Operator (which creates the CRD):
+### Install Cert-Manager v1.14 on the host:
 
-`helm repo add bitnami https://charts.bitnami.com/bitnami`{{exec}}
+`helm repo add jetstack https://charts.jetstack.io`{{exec}}
 
-`helm install mysql-operator bitnami/mysql-operator --namespace kube-system --create-namespace`{{exec}}
+`helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version 1.14.0`{{exec}}
 
-Inspect it:
+Inspect the CRD:
 
-`kubectl get crd mysqlclusters.mysql.presslabs.org -o yaml`{{exec}}
+`kubectl get crd certificates.cert-manager.io -o yaml | head -30`{{exec}}
 
-Now check the CRD that was created:
+List all cert-manager CRDs:
 
-`kubectl get crds | grep mysql`{{exec}}
+`kubectl get crds | grep cert-manager`{{exec}}
 
 ### Result:
 
-The host cluster now has the MySQL Operator CRD installed, which can impact workloads if versions conflict.
+The host cluster now runs Cert-Manager v1.14.0 with its corresponding CRD versions.
 
-This is a common issue in shared cluster environments.
+This is a common scenario in shared cluster environments where the platform team manages a specific version.
 
 ============================================================
 
-## STEP 5 — Install a Different CRD Version in the vCluster
+## STEP 5 — Install a Different Cert-Manager Version in the vCluster
 
-Inside the vCluster, we can install a **completely different CRD version** without impacting the host cluster.
+Inside the vCluster, we can install a **completely different version** of Cert-Manager without impacting the host cluster. This demonstrates how teams can test upgrades or run legacy versions independently.
 
-### Connect and install a different MySQL Operator version:
+### Connect and install Cert-Manager v1.13 in the vCluster:
 
 `vcluster connect my-vcluster --namespace team-x`{{exec}}
 
-`helm repo add bitnami https://charts.bitnami.com/bitnami`{{exec}}
+`helm repo add jetstack https://charts.jetstack.io`{{exec}}
 
-`helm install mysql-operator-vc bitnami/mysql-operator --namespace kube-system --create-namespace --version 0.4.0`{{exec}}
+`helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version 1.13.0`{{exec}}
 
-`kubectl get crds | grep mysql`{{exec}}
+List the CRDs:
+
+`kubectl get crds | grep cert-manager`{{exec}}
 
 Now compare the host vs vCluster:
 
-### Host version:
+### Host version (v1.14.0):
 
-`kubectl get crd mysqlclusters.mysql.presslabs.org -o yaml`{{exec}}
+`vcluster disconnect`{{exec}}
 
-### vCluster version:
+`kubectl get crd certificates.cert-manager.io -o jsonpath='{.spec.names.kind}' && echo`{{exec}}
+
+### vCluster version (v1.13.0):
 
 `vcluster connect my-vcluster --namespace team-x`{{exec}}
-`kubectl get crd mysqlclusters.mysql.presslabs.org -o yaml`{{exec}}
+
+`kubectl get crd certificates.cert-manager.io -o jsonpath='{.spec.names.kind}' && echo`{{exec}}
 
 The two versions differ — and that's the point.
 vClusters allow **CRD version isolation**, making testing and migration safer.
 
 ============================================================
 
-## STEP 6 — Install an Alternative or Updated CRD in the Host Cluster
+## STEP 6 — Install Additional CRD Resources in the Host Cluster
 
-The host cluster may install other CRDs for other operators or workloads.
+The host cluster may configure additional cert-manager resources or CRD features for specific use cases.
 
-### Example: Install Postgres Operator (which creates the CRD):
+### Example: Create a ClusterIssuer resource on the host:
 
-`helm repo add cnpg https://cloudnative-pg.github.io/charts`{{exec}}
+`vcluster disconnect`{{exec}}
 
-`helm install postgres-operator cnpg/cloudnative-pg --namespace kube-system --create-namespace`{{exec}}
+`kubectl create namespace cert-manager 2>/dev/null || true`{{exec}}
 
-Then list all CRDs:
+`kubectl apply -f - <<EOF
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned
+spec:
+  selfSigned: {}
+EOF`{{exec}}
 
-`kubectl get crds`{{exec}}
+List the ClusterIssuers:
 
-The host now contains both MySQL and Postgres CRDs globally.
+`kubectl get clusterissuers`{{exec}}
 
-This illustrates how CRDs accumulate in platform clusters and why isolation matters.
+The host now contains Cert-Manager resources configured for its specific needs.
+
+This illustrates how operators accumulate configuration in platform clusters and why isolation matters.
 
 ============================================================
 
-## STEP 7 — Install an Alternative Component Inside the vCluster
+## STEP 7 — Install Alternative Cert-Manager Configuration Inside the vCluster
 
-Inside the vCluster, tenants can install operators or components that conflict with host components—without affecting the cluster.
+Inside the vCluster, tenants can configure cert-manager resources independently without affecting the host cluster.
 
-### Example: Install a Postgres Operator inside the vCluster:
+### Example: Create a ClusterIssuer with different settings in the vCluster:
 
 `vcluster connect my-vcluster --namespace team-x`{{exec}}
 
-`helm repo add cnpg https://cloudnative-pg.github.io/charts`{{exec}}
+`kubectl apply -f - <<EOF
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: admin@example.com
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+    - http01:
+        ingress: {}
+EOF`{{exec}}
 
-`helm install postgres-operator-vc cnpg/cloudnative-pg --namespace kube-system --create-namespace`{{exec}}
+List the ClusterIssuers in the vCluster:
 
-`kubectl get crds | grep postgre`{{exec}}
+`kubectl get clusterissuers`{{exec}}
 
 This shows:
-- Host cluster uses MySQL
-- vCluster uses Postgres
+- Host cluster uses self-signed certificates
+- vCluster uses Let's Encrypt staging
 - No conflicts
 
-This demonstrates full tenant autonomy.
+This demonstrates full tenant autonomy in certificate management.
 
 ============================================================
 

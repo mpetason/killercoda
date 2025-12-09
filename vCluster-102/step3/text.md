@@ -9,6 +9,8 @@ But vClusters **virtualize CRDs**, so each vCluster can define:
 
 ## Check host CRDs:
 
+`vcluster disconnect`{{exec}}
+
 `kubectl get crds`{{exec}}
 
 ## Check vCluster CRDs:

@@ -1,23 +1,29 @@
-# Install CRD in the Host Cluster
+# Install Cert-Manager CRD in the Host Cluster
 
-In this step, we simulate a real-world scenario where the platform team installs a MySQL Operator CRD at the cluster level.
+In this step, we simulate a real-world scenario where the platform team installs Cert-Manager at the cluster level. Cert-Manager is a widely-used certificate management operator that has evolved through multiple CRD versions.
 
-## Install MySQL Operator (which creates the CRD):
+## Disconnect from the vCluster and verify context:
 
-`helm repo add bitnami https://charts.bitnami.com/bitnami`{{exec}}
+`vcluster disconnect`{{exec}}
 
-`helm install mysql-operator bitnami/mysql-operator --namespace kube-system --create-namespace`{{exec}}
+`kubectx`
 
-Inspect it:
+## Install Cert-Manager v1.14 on the host:
 
-`kubectl get crd mysql.example.com -o yaml`{{exec}}
+`helm repo add jetstack https://charts.jetstack.io`{{exec}}
 
-Now attempt to install a different version:
+`helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version 1.14.0`{{exec}}
 
-`kubectl get crd mysqlclusters.mysql.presslabs.org -o yaml`{{exec}}
+Inspect the CRD:
+
+`kubectl get crd certificates.cert-manager.io -o yaml | head -30`{{exec}}
+
+List all cert-manager CRDs:
+
+`kubectl get crds | grep cert-manager`{{exec}}
 
 ## Result:
 
-The host cluster now uses the updated CRD, potentially breaking workloads that expect v1.
+The host cluster now runs Cert-Manager v1.14.0 with its corresponding CRD versions.
 
-This is a common issue in shared cluster environments.
+This is a common scenario in shared cluster environments where the platform team manages a specific version.

@@ -1,17 +1,26 @@
-# Install an Alternative or Updated CRD in the Host Cluster
+# Install Additional CRD Resources in the Host Cluster
 
-The host cluster may install other CRDs for other operators or workloads.
+The host cluster may configure additional cert-manager resources or CRD features for specific use cases.
 
-## Example: Install Postgres Operator (which creates the CRD):
+## Example: Create a ClusterIssuer resource on the host:
 
-`helm repo add cnpg https://cloudnative-pg.github.io/charts`{{exec}}
+`vcluster disconnect`{{exec}}
 
-`helm install postgres-operator cnpg/cloudnative-pg --namespace kube-system --create-namespace`{{exec}}
+`kubectl create namespace cert-manager 2>/dev/null || true`{{exec}}
 
-Then list all CRDs:
+`kubectl apply -f - <<EOF
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned
+spec:
+  selfSigned: {}
+EOF`{{exec}}
 
-`kubectl get crds`{{exec}}
+List the ClusterIssuers:
 
-The host now contains both MySQL and Postgres CRDs globally.
+`kubectl get clusterissuers`{{exec}}
 
-This illustrates how CRDs accumulate in platform clusters and why isolation matters.
+The host now contains Cert-Manager resources configured for its specific needs.
+
+This illustrates how operators accumulate configuration in platform clusters and why isolation matters.
