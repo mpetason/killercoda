@@ -6,8 +6,6 @@ The host cluster can run a policy controller such as Kyverno. Kyverno adds polic
 
 Let's make sure we are on the host cluster before deploying Kyverno.
 
-`vcluster disconnect`{{exec}}
-
 `kubectx`{{exec}}
 
 ## Install Kyverno on the host:

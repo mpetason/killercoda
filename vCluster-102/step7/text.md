@@ -12,6 +12,10 @@ List Gatekeeper/OPA CRDs in the vCluster:
 
 `kubectl get crds | grep -i "gatekeeper"`{{exec}}
 
+Also list all CRDs to see that Kyverno is not installed in the vCluster.
+
+`kubectl get crds`{{exec}}
+
 This shows:
 - Host cluster runs Kyverno
 - vCluster runs OPA Gatekeeper
