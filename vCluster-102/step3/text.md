@@ -7,15 +7,13 @@ But vClusters **virtualize CRDs**, so each vCluster can define:
 - CRDs that don't exist on the host
 - CRDs that would conflict in a shared cluster
 
-## Check host CRDs:
-
-`vcluster disconnect`{{exec}}
+## Check vCluster CRDs:
 
 `kubectl get crds`{{exec}}
 
-## Check vCluster CRDs:
+## Check host CRDs:
 
-`vcluster connect my-vcluster --namespace team-x`{{exec}}
+`vcluster disconnect`{{exec}}
 
 `kubectl get crds`{{exec}}
 

@@ -8,25 +8,21 @@ Inside the vCluster, we can install a **completely different version** of Cert-M
 
 `kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.crds.yaml`{{exec}}
 
-`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml`{{exec}}
-
 List the CRDs:
 
 `kubectl get crds | grep cert-manager`{{exec}}
 
-Now compare the host vs vCluster:
+Now compare the vCluster vs Host:
+
+## vCluster version (v1.13.0):
+
+`kubectl get crd certificates.cert-manager.io -o yaml | head -30|grep "app.kubernetes.io/version:"`{{exec}}
 
 ## Host version (v1.14.0):
 
 `vcluster disconnect`{{exec}}
 
-`kubectl get crd certificates.cert-manager.io -o jsonpath='{.spec.names.kind}' && echo`{{exec}}
-
-## vCluster version (v1.13.0):
-
-`vcluster connect my-vcluster --namespace team-x`{{exec}}
-
-`kubectl get crd certificates.cert-manager.io -o jsonpath='{.spec.names.kind}' && echo`{{exec}}
+`kubectl get crd certificates.cert-manager.io -o yaml | head -30|grep "app.kubernetes.io/version:"`{{exec}}
 
 The two versions differ — and that's the point.
 vClusters allow **CRD version isolation**, making testing and migration safer.
