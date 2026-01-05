@@ -1,4 +1,3 @@
-```markdown
 # Step 3 — Expose both apps
 
 We will expose each `my-app` service so they can be reached independently.
@@ -30,5 +29,3 @@ Option B: port-forward locally from each vCluster context (works everywhere):
 `kubectl port-forward svc/my-app 28080:80 &`{{exec}}
 
 `vcluster disconnect`{{exec}}
-
-```

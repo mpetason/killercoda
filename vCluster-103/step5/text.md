@@ -1,4 +1,4 @@
-Step 5 — Cleanup & Wrap-up
+# Step 5 — Cleanup & Wrap-up
 
 Remove the resources and vClusters when done.
 

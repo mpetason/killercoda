@@ -1,4 +1,3 @@
-```markdown
 # Step 2 — Deploy same app name in both vClusters
 
 We'll deploy a simple nginx Deployment named `my-app` in each vCluster's `default` namespace.
@@ -23,4 +22,3 @@ Disconnect and repeat for the second vCluster:
 
 `vcluster disconnect`{{exec}}
 
-```
