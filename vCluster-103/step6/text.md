@@ -6,13 +6,13 @@ Delete deployments/services inside vClusters then delete the vClusters themselve
 
 `vcluster connect my-vcluster-a --namespace team-x`{{exec}}
 
-`kubectl delete svc,deployment -l app=web --ignore-not-found`{{exec}}
+`kubectl delete svc my-app deployment my-app --ignore-not-found`{{exec}}
 
 `vcluster disconnect`{{exec}}
 
 `vcluster connect my-vcluster-b --namespace team-x`{{exec}}
 
-`kubectl delete svc,deployment -l app=web --ignore-not-found`{{exec}}
+`kubectl delete svc my-app deployment my-app --ignore-not-found`{{exec}}
 
 `vcluster disconnect`{{exec}}
 

@@ -1,7 +1,13 @@
-# vCluster 103 — Multi-Tenancy Isolation via Same Application Names
+# vCluster 103 — Multi-Tenancy Isolation
 
-This short scenario shows why vCluster exists: two tenants can run the exact same application name and service name without colliding, because each vCluster provides an isolated control plane and API surface.
+In this scenario we are are going to deploy two applications, using the same deployment YAML and naming. Since we are deploying each in its own vCluster, it doesn't matter if the naming overlaps. We are even going to deploy to the default namespace in each vCluster. 
 
-You will create two vClusters, deploy the same app and service names into both, expose them, and confirm they operate independently.
 
-Prerequisites: `vcluster` CLI and `kubectl` available in the environment.
+This short scenario shows how vCluster prevents name conflicts. Two tenants can deploy the same application and service names and run them independently because each vCluster has its own control plane and API.
+
+What you'll do:
+
+- Create two vClusters (`my-vcluster-a` and `my-vcluster-b`) in the `team-x` namespace
+- Deploy the same `my-app` Deployment and Service in each vCluster
+- Expose each service (NodePort or port-forward)
+- Verify both services work without interfering with each other

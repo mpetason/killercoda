@@ -7,9 +7,9 @@ Connect to the first vCluster and deploy:
 
 `vcluster connect my-vcluster-a --namespace team-x`{{exec}}
 
-`kubectl create deployment web --image=nginx --replicas=1`{{exec}}
+`kubectl create deployment my-app --image=nginx --replicas=1`{{exec}}
 
-`kubectl expose deployment web --port=80 --target-port=80 --type=ClusterIP`{{exec}}
+`kubectl expose deployment my-app --port=80 --target-port=80 --type=ClusterIP`{{exec}}
 
 Disconnect and repeat for the second vCluster:
 
@@ -17,9 +17,9 @@ Disconnect and repeat for the second vCluster:
 
 `vcluster connect my-vcluster-b --namespace team-x`{{exec}}
 
-`kubectl create deployment web --image=nginx --replicas=1`{{exec}}
+`kubectl create deployment my-app --image=nginx --replicas=1`{{exec}}
 
-`kubectl expose deployment web --port=80 --target-port=80 --type=ClusterIP`{{exec}}
+`kubectl expose deployment my-app --port=80 --target-port=80 --type=ClusterIP`{{exec}}
 
 `vcluster disconnect`{{exec}}
 
