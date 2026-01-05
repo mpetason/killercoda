@@ -4,7 +4,7 @@ Create two vClusters in the `team-x` namespace. We'll name them `my-vcluster-a` 
 
 Commands:
 
-`kubectl create namespace team-x 2>/dev/null || true`{{exec}}
+`kubectl create namespace team-x`{{exec}}
 
 `vcluster create my-vcluster-a --namespace team-x`{{exec}}
 
