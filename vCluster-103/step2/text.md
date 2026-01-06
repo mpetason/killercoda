@@ -14,7 +14,7 @@ Disconnect and repeat for the second vCluster:
 
 `vcluster disconnect`{{exec}}
 
-`vcluster connect my-vcluster-b --namespace team-x`{{exec}}
+`vcluster connect my-vcluster-b --namespace team-y`{{exec}}
 
 `kubectl create deployment my-app --image=nginx --replicas=1`{{exec}}
 

@@ -10,7 +10,7 @@ Delete deployments/services inside vClusters then delete the vClusters themselve
 
 `vcluster disconnect`{{exec}}
 
-`vcluster connect my-vcluster-b --namespace team-x`{{exec}}
+`vcluster connect my-vcluster-b --namespace team-y`{{exec}}
 
 `kubectl delete svc my-app deployment my-app --ignore-not-found`{{exec}}
 
@@ -20,6 +20,6 @@ Delete the virtual clusters from the host:
 
 `vcluster delete my-vcluster-a --namespace team-x`{{exec}}
 
-`vcluster delete my-vcluster-b --namespace team-x`{{exec}}
+`vcluster delete my-vcluster-b --namespace team-y`{{exec}}
 
 Thank you — you successfully demonstrated same-name isolation with vClusters.

@@ -6,8 +6,10 @@ Commands:
 
 `kubectl create namespace team-x`{{exec}}
 
-`vcluster create my-vcluster-a --namespace team-x`{{exec}}
+`vcluster create --connect=false my-vcluster-a --namespace team-x`{{exec}}
 
-`vcluster create my-vcluster-b --namespace team-x`{{exec}}
+`kubectl create namespace team-y`{{exec}}
+
+`vcluster create --connect=false my-vcluster-b --namespace team-y`{{exec}}
 
 Verify both are running with `vcluster list`.

@@ -18,7 +18,7 @@ Option A: NodePort (if allowed): connect to each vCluster and patch the service 
 
 Option B: port-forward locally from each vCluster context (works everywhere):
 
-`vcluster connect my-vcluster-a --namespace team-x`{{exec}}
+`vcluster connect my-vcluster-a --namespace team-y`{{exec}}
 
 `kubectl port-forward svc/my-app 18080:80 &`{{exec}}
 
