@@ -4,13 +4,13 @@ We will expose each `my-app` service so they can be reached independently.
 
 Option A: NodePort (if allowed): connect to each vCluster and patch the service to NodePort.
 
-`vcluster connect my-vcluster-a --namespace team-x`{{exec}}
+`vcluster connect my-vcluster-a`{{exec}}
 
 `kubectl patch svc my-app -p '{"spec": {"type": "NodePort"}}'`{{exec}}
 
 `vcluster disconnect`{{exec}}
 
-`vcluster connect my-vcluster-b --namespace team-x`{{exec}}
+`vcluster connect my-vcluster-b`{{exec}}
 
 `kubectl patch svc my-app -p '{"spec": {"type": "NodePort"}}'`{{exec}}
 
@@ -18,7 +18,7 @@ Option A: NodePort (if allowed): connect to each vCluster and patch the service 
 
 Option B: port-forward locally from each vCluster context (works everywhere):
 
-`vcluster connect my-vcluster-a --namespace team-y`{{exec}}
+`vcluster connect my-vcluster-a`{{exec}}
 
 `kubectl port-forward svc/my-app 18080:80 &`{{exec}}
 
