@@ -10,7 +10,7 @@ kubectl port-forward svc/my-app 18080:80 &
 
 `vcluster disconnect`{{exec}}
 
-`vcluster connect my-vcluster-b --namespace`{{exec}}
+`vcluster connect my-vcluster-b`{{exec}}
 
 ```bash
 kubectl port-forward svc/my-app 28080:80 &
