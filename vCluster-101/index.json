@@ -1,6 +1,6 @@
 {
-  "title": "v101 - vCluster Quickstart",
-  "description": "vCluster Quickstart companion scenario.",
+  "title": "v101 - Hello vCluster",
+  "description": "Hello vCluster",
   "details": {
     "intro": {
       "text": "intro.md",
