@@ -12,4 +12,4 @@ Commands:
 
 `vcluster create --connect=false my-vcluster-b --namespace team-y`{{exec}}
 
-Verify both are running with `vcluster list`.
+Verify both are running with `vcluster list`{{exec}}.

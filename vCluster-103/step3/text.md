@@ -1,22 +1,6 @@
-# Step 3 — Expose both apps
+# Step 3 — Expose both apps (port-forward)
 
-We will expose each `my-app` service so they can be reached independently.
-
-Option A: NodePort (if allowed): connect to each vCluster and patch the service to NodePort.
-
-`vcluster connect my-vcluster-a`{{exec}}
-
-`kubectl patch svc my-app -p '{"spec": {"type": "NodePort"}}'`{{exec}}
-
-`vcluster disconnect`{{exec}}
-
-`vcluster connect my-vcluster-b`{{exec}}
-
-`kubectl patch svc my-app -p '{"spec": {"type": "NodePort"}}'`{{exec}}
-
-`vcluster disconnect`{{exec}}
-
-Option B: port-forward locally from each vCluster context (works everywhere):
+We will port-forward each `my-app` service so they can be reached locally.
 
 `vcluster connect my-vcluster-a`{{exec}}
 
