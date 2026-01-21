@@ -1,27 +1,17 @@
-# Install Cert-Manager CRD in the Host Cluster
+# Step 4 — Verify independent access
 
-In this step, we simulate a real-world scenario where the platform team installs Cert-Manager at the cluster level.
+Now let's verify that both `my-app` instances are running independently. We'll test connectivity to each via the port-forwards we set up.
 
-## Verify the context to make sure we are on the host cluster:
+In one terminal, verify that `my-app` in vCluster-a is accessible on port 18080:
 
-`kubectx`{{exec}}
+`curl http://localhost:18080`{{exec}}
 
-The output should show kubernetes-admin@kubernetes in green.
+You should see the nginx welcome page HTML.
 
-## Install Cert-Manager v1.14 on the host:
+In another terminal, verify that `my-app` in vCluster-b is accessible on port 28080:
 
-`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.0/cert-manager.crds.yaml`{{exec}}
+`curl http://localhost:28080`{{exec}}
 
-Inspect the CRD:
+Again, you should see the nginx welcome page.
 
-`kubectl get crd certificates.cert-manager.io -o yaml | grep "app.kubernetes.io/version:"`{{exec}}
-
-List all cert-manager CRDs:
-
-`kubectl get crds | grep cert-manager`{{exec}}
-
-## Result:
-
-The host cluster now runs Cert-Manager v1.14.0.
-
-This is a common scenario in shared cluster environments where the platform team manages a specific version.
+Both instances respond identically because they're running the same container image, but they are completely independent — deployed, scheduled, and managed separately by each vCluster's control plane.

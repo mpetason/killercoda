@@ -24,3 +24,5 @@ privateNodes:
   - Sensitive workloads
   - GPU Clouds
   - Multi-Cloud
+  
+![Scan Results](../assets/private_nodes_killercoda.png)

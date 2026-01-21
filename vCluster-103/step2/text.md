@@ -1,24 +1,18 @@
-# Step 2 — Deploy same app name in both vClusters
+# What Is a vCluster?
 
-We'll deploy a simple nginx Deployment named `my-app` in each vCluster's `default` namespace.
+A **vCluster (virtual cluster)** is a lightweight Kubernetes control plane that runs **inside** a Namespace but behaves as an independent Kubernetes cluster.
 
-Connect to the first vCluster and deploy:
+A vCluster has its own:
+- API server
+- Controllers
+- CRDs
 
-`vcluster connect my-vcluster-a`{{exec}}
+This isolates tenants at the *control plane level*, not just at the Namespace level.
 
-`kubectl create deployment my-app --image=nginx --replicas=1`{{exec}}
+## Create a vCluster:
 
-`kubectl expose deployment my-app --port=80 --target-port=80 --type=ClusterIP`{{exec}}
+Let's create a vCluster so that we can see what happens when we install a different CRD version on the host cluster and the vCluster.
 
-`vcluster disconnect`{{exec}}
+`vcluster create my-vcluster --namespace team-x`{{exec}}
 
-Repeat the steps for the second vCluster:
-
-`vcluster connect my-vcluster-b`{{exec}}
-
-`kubectl create deployment my-app --image=nginx --replicas=1`{{exec}}
-
-`kubectl expose deployment my-app --port=80 --target-port=80 --type=ClusterIP`{{exec}}
-
-`vcluster disconnect`{{exec}}
-
+When connected, your kubeconfig points to the **vCluster API server**, not the host.

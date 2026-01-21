@@ -1,16 +1,5 @@
-# vCluster 102 — Tenancy Models & CRD Isolation
+# vCluster 102
 
-A comprehensive scenario exploring Kubernetes tenancy challenges and vCluster isolation solutions.
+Topic: Multi-Tenancy Isolation via Same Application Names
 
-## Topics Covered
-
-- Why Namespaces are limited for multi-tenancy
-- vCluster as a true isolation solution
-- CRD versioning across host and virtual clusters
-- Installing alternative components in vClusters
-- Tenancy Models:
-  - Shared Nodes
-  - Dedicated Nodes
-  - Private Nodes + Autonodes
-
-For more information visit the vCluster Docs: https://www.vcluster.com/docs/
+This scenario demonstrates running two virtual clusters that deploy the same application and service names without conflict.
