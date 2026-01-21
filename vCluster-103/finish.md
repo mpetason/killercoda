@@ -1,4 +1,4 @@
-# Congratulations! You've completed the vCluster 102 Scenario.
+# Congratulations! You've completed the vCluster 103 Scenario.
 
 You learned:
 

@@ -1,4 +1,4 @@
-# Welcome to **vCluster 102**, a hands-on scenario where you will explore what Kubernetes tenancy really means.
+# Welcome to **vCluster 103**, a hands-on scenario where you will explore what Kubernetes tenancy really means.
 
 Kubernetes offers Namespaces as the default isolation method, but Namespaces alone fall short for true multitenancy. vCluster provides a lightweight virtualized control plane that isolates tenants.
 

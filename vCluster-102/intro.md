@@ -1,4 +1,4 @@
-# vCluster 103 — Multi-Tenancy Isolation
+# vCluster 102 — Multi-Tenancy Isolation
 
 In this scenario we are are going to deploy two applications, using the same deployment YAML and naming. Since we are deploying each in its own vCluster, it doesn't matter if the naming overlaps. We are even going to deploy to the default namespace in each vCluster. 
 

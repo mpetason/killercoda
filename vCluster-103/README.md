@@ -1,4 +1,4 @@
-# vCluster 102 — Tenancy Models & CRD Isolation
+# vCluster 103 — Tenancy Models & CRD Isolation
 
 A comprehensive scenario exploring Kubernetes tenancy challenges and vCluster isolation solutions.
 
