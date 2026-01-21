@@ -1,15 +1,15 @@
-# What Is a Namespace?
+# Step 1 — Create two vClusters
 
-Namespaces are the **default isolation mechanism** in Kubernetes. They allow logical grouping of resources, controlling access, and splitting environments or teams.
-However, Namespaces **share a single control plane**.
+Create two vClusters in the `team-x` namespace. We'll name them `my-vcluster-a` and `my-vcluster-b`.
 
-## Problems with Namespaces:
+Commands:
 
-- They do **not isolate the API server**
-- **CRDs are global**—all tenants share the same version
-- Cluster-wide controllers can affect all Namespaces
-- Tenants can break each other through:
-  - RBAC misconfigurations
-  - Resource quota conflicts
+`kubectl create namespace team-x`{{exec}}
 
-Namespaces are helpful, but they **may not provide full multi-tenant isolation**.
+`vcluster create --connect=false my-vcluster-a --namespace team-x`{{exec}}
+
+`kubectl create namespace team-y`{{exec}}
+
+`vcluster create --connect=false my-vcluster-b --namespace team-y`{{exec}}
+
+Verify both are running with `vcluster list`{{exec}}.

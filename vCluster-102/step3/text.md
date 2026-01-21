@@ -1,24 +1,15 @@
-# CRD Version Differences (Host vs vCluster)
+# Step 3 — Expose both apps (port-forward)
 
-CRDs in Kubernetes are **cluster-scoped**, meaning all Namespaces share the same CRD definitions.
+We will port-forward each `my-app` service so they can be reached locally.
 
-But vCluster creates a new API which can be configured with:
-- Different CRD versions
-- CRDs that don't exist on the host
-- CRDs that would conflict in a shared cluster
+`vcluster connect my-vcluster-a`{{exec}}
 
-## Check vCluster CRDs:
-
-The vCluster deploys without any CRDs by default as it is a fresh Kubernetes deployment. 
-
-`kubectl get crds`{{exec}}
-
-## Check host CRDs:
-
-Now we will disconnect from the vCluster and list the host CRDs.
+`kubectl port-forward svc/my-app 18080:80 &`{{exec}}
 
 `vcluster disconnect`{{exec}}
 
-`kubectl get crds`{{exec}}
+`vcluster connect my-vcluster-b`{{exec}}
 
-CRDs are a great way to demonstrate isolation in a vCluster.
+`kubectl port-forward svc/my-app 28080:80 &`{{exec}}
+
+`vcluster disconnect`{{exec}}

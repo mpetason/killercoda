@@ -1,13 +1,22 @@
-# vCluster 103 — Multi-Tenancy Isolation
+# Welcome to **vCluster 102**, a hands-on scenario where you will explore what Kubernetes tenancy really means.
 
-In this scenario we are are going to deploy two applications, using the same deployment YAML and naming. Since we are deploying each in its own vCluster, it doesn't matter if the naming overlaps. We are even going to deploy to the default namespace in each vCluster. 
+Kubernetes offers Namespaces as the default isolation method, but Namespaces alone fall short for true multitenancy. vCluster provides a lightweight virtualized control plane that isolates tenants.
 
+In this scenario we will cover:
 
-This short scenario shows how vCluster prevents name conflicts. Two tenants can deploy the same application and service names and run them independently because each vCluster has its own control plane and API.
+- Why Namespaces are limited
+- How vCluster solves Namespace problems
+- How CRDs behave globally vs virtually
+- Running different CRD versions in host vs vCluster
+- Installing alternative CRDs inside a vCluster
+- vCluster Tenancy Modes:
+  - Shared Nodes
+  - Dedicated Nodes
+  - Private Nodes
+  - Private Nodes + Autonodes
 
-What you'll do:
+By the end, you will understand how vCluster enables multi-tenant Kubernetes architectures.
 
-- Create two vClusters (`my-vcluster-a` and `my-vcluster-b`) in the `team-x` namespace
-- Deploy the same `my-app` Deployment and Service in each vCluster
-- Expose each service (Port-Forwarding)
-- Verify both services work without interfering with each other
+If you need help, join the community Slack:
+
+https://slack.vcluster.com

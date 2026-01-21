@@ -1,6 +1,6 @@
 {
-  "title": "v103 - Multi-Tenancy Isolation via Same Application Names",
-  "description": "Demonstrate how vClusters allow two tenants to run the same application and service names without conflict.",
+  "title": "v103 - vCluster Tenancy Models & CRDs",
+  "description": "vCluster Tenancy Models and CRDs scenario.",
   "details": {
     "intro": {
       "text": "intro.md",
